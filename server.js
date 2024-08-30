@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
 
 const app = express();
 
@@ -10,6 +13,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.static(path.join(__dirname, '/client/build')));
+app.use(session({ 
+    secret: 'xyz123', 
+    store: MongoStore.create({
+        mongoUrl: 'mongodb://0.0.0.0:27017/NoticeBoard'
+    }),
+    resave: false, 
+    saveUninitialized: false
+}));
 
 mongoose.connect('mongodb://0.0.0.0:27017/NoticeBoard', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
