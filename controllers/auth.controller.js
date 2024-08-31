@@ -29,7 +29,7 @@ exports.login = async (req, res) => {
                 res.status(400).send({ message: 'Login or password are ircorrect' });
             } else {
                 if(bcrypt.compareSync(password, user.password)) {
-                    req.session.login = user.login;
+                    req.session.user = {id: user.id, login: user.login}
                     res.status(200).send({ message: 'Login succesful' });
                 } else {
                     res.status(400).send({ message: 'Login or password are ircorrect' });
@@ -45,4 +45,18 @@ exports.login = async (req, res) => {
 
 exports.user = async (req, res) => {
     res.send('Yes you are logged');
+};
+
+
+exports.logout = async (req, res) => {
+    try{ 
+        if (process.env.NODE_ENV !== "production") {
+           
+            await Session.deleteMany({});
+        }
+        req.session.destroy();
+        res.json({ message: 'Logout successful' });
+    } catch (err) {
+        res.status(500).send({ message: err.message }); 
+    }
 };

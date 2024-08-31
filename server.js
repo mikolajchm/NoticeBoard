@@ -14,12 +14,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(session({ 
-    secret: 'xyz123', 
+    secret: process.env.secret, 
     store: MongoStore.create({
         mongoUrl: 'mongodb://0.0.0.0:27017/NoticeBoard'
     }),
     resave: false, 
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
 
 mongoose.connect('mongodb://0.0.0.0:27017/NoticeBoard', { useNewUrlParser: true, useUnifiedTopology: true });
