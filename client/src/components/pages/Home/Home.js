@@ -1,8 +1,12 @@
+import Search from "../SearchPharse/SearchPharse";
+import Ads from "../../features/Ads/Ads";
+
 const Home = () => {
     return (
-        <div>
-            <h1>Home</h1>
-        </div>
+        <main> 
+            <Search />
+            <Ads />
+        </main>
     )
 }
 export default Home;
