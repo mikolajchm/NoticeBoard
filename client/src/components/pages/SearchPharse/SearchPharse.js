@@ -7,7 +7,7 @@ const SearchPharse = () => {
     return (
         <div>
             <InputGroup>
-                <Form className="d-flex mt-3 mb-3 mx-auto w-50" style={{ maxWidth: '500px' }}>
+                <Form className="d-flex mt-3 mb-3 mx-auto w-50" style={{ maxWidth: "500px" }}>
                     <Form.Group className="flex-grow-1" controlId="exampleForm.ControlInput1">
                         <Form.Control type="text" placeholder="Search..." /*value={searchPharse}*/ />
                     </Form.Group>
