@@ -4,6 +4,7 @@ import { useState } from 'react';
 import  { API_URL } from '../../../config';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
+import { useNavigate } from 'react-router-dom';
  
 
 const Register = () => {
@@ -14,6 +15,7 @@ const Register = () => {
     const [avatar, setAvatar] = useState(null);
     const [status, setStatus] = useState(null); // null, 'loading', 'succes', 'serverError' , 'clientError', 'loginError'
 
+    const navigate = useNavigate();
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -35,6 +37,9 @@ const Register = () => {
             .then(res => {
                 if (res.status === 201 ){
                     setStatus('success');
+                    setTimeout(() => {
+                        navigate("/");
+                    }, 50);
                 } else if (res.status === 400) {
                     setStatus('clientError');
                 } else if (res.status === 409) {

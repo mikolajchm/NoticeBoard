@@ -35,10 +35,10 @@ const Login = () => {
             .then(res => {
                 if (res.status === 200 ){
                     setStatus('success');
+                    dispatch(logIn({ login }));
                     setTimeout(() => {
                         navigate("/");
                     }, 50);
-                    dispatch(logIn({ login }));
                 } else if (res.status === 400) {
                     setStatus('clientError');
                 } else {
