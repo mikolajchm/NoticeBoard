@@ -21,7 +21,7 @@ const Logout = () => {
             }, 50);
         });
         
-    }, [dispatch]);
+    }, [dispatch, navigate]);
 
     return null;
 };

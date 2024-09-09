@@ -20,15 +20,17 @@ exports.getId = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
+    const { title, content, publishDate, photo, price, location, sellerinfo } = req.body;
+    
     const newad = {
-        title: (req.params.title),
-        content: (req.params.content),
-        publishedDate: (req.pamas.publishedDate),
-        photo: (req.params.photo),
-        price: (req.params.price),
-        location: (req.params.location),
-        sellerinfo: (req.params.sellerinfo)
-    }
+        title,
+        content,
+        publishDate,
+        photo,
+        price,
+        location,
+        sellerinfo
+    };
     try {
         const newAd = new Ads(newad);
         await newAd.save();
@@ -51,16 +53,15 @@ exports.delete = async (req, res) => {
 };
 
 exports.putId = async (req, res) => {
-    const { title, content, publishedDate, price, location, sellerinfo } = req.body;
+    const { title, content, price, location } = req.body;
     try {
         const ad = await Ads.findById(req.params.id);
         if (ad) {
             if (title !== undefined) ad.title = title;
             if (content !== undefined) ad.content = content;
-            if (publishedDate !== undefined) ad.publishedDate = publishedDate;
             if (price !== undefined) ad.price = price;
             if (location !== undefined) ad.location = location;
-            if (sellerinfo !== undefined) ad.sellerinfo = sellerinfo;
+            
 
             if (req.file) {
                 if (ad.photo) {

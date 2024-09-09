@@ -29,25 +29,27 @@ const Login = () => {
             body: JSON.stringify({ login, password })
           };
 
-          setStatus('loading');
+        setStatus('loading');
 
         fetch(`${API_URL}/auth/login`, options)
-            .then(res => {
-                if (res.status === 200 ){
-                    setStatus('success');
-                    dispatch(logIn({ login }));
-                    setTimeout(() => {
-                        navigate("/");
-                    }, 50);
-                } else if (res.status === 400) {
-                    setStatus('clientError');
-                } else {
-                    setStatus('serverError');
-                }
-            })
-            .catch((err) => {
-                setStatus('serverError');
-            });
+      .then((res) => {
+        if (res.status === 200) {
+          setStatus("success");
+          dispatch(logIn({ login }));
+          setTimeout(() => {
+            navigate("/");
+          }, 1500);
+        } else if (res.status === 400) {
+          setStatus("clientError");
+        } else if (res.status === 409) {
+          setStatus("loginError");
+        } else {
+          setStatus("serverError");
+        }
+      })
+      .catch((err) => {
+        setStatus("serverError");
+      });
     }
 
 

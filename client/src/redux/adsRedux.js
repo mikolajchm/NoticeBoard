@@ -16,11 +16,11 @@ export const removeAd = payload => ({ type: REMOVE_AD, payload});
 const adsReducer = (statePart = [], action) => {
     switch(action.type) {
         case ADD_AD:
-            return
+            return [...statePart, {...action.payload }];
         case EDIT_AD:
             return
         case REMOVE_AD:
-            return
+            return statePart.filter((ad) => ad.id !== action.payload);
     default: 
         return  statePart;
     };

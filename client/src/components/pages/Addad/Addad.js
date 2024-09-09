@@ -1,9 +1,9 @@
-import AdForm from "../../features/AdForm/AdForm";
+import AddAdForm from "../../features/AddAdForm/AddAdForm";
 
 const Addad = () => {
     return (
         <div>
-            <AdForm/>
+            <AddAdForm/>
         </div>
     )
 }

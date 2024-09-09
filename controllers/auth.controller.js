@@ -32,22 +32,24 @@ exports.login = async (req, res) => {
     try { 
         const { login, password } = req.body;
         if (login && typeof login === 'string' && password && typeof password === 'string') {
-        const user = await User.findOne({ login });
-            if(!user) {
-                res.status(400).send({ message: 'Login or password are ircorrect' });
+            const user = await User.findOne({ login });
+            if (!user) {
+                return res.status(400).send({ message: 'Login or password are incorrect' });
+            } 
+            if (bcrypt.compareSync(password, user.password)) {
+                req.session.user = { id: user._id, login: user.login }; 
+                return res.status(200).send({
+                    message: 'Login successful',
+                    user: { id: user._id, login: user.login }  
+                });
             } else {
-                if(bcrypt.compareSync(password, user.password)) {
-                    req.session.user = {id: user.id, login: user.login}
-                    res.status(200).send({ message: 'Login succesful' });
-                } else {
-                    res.status(400).send({ message: 'Login or password are ircorrect' });
-                    }
-                }
-        } else {
-            res.status(400).send({ message: 'Bad request' });
+                return res.status(400).send({ message: 'Login or password are incorrect' });
             }
+        } else {
+            return res.status(400).send({ message: 'Bad request' });
+        }
     } catch (err) {
-        res.status(500).send({ message: err.message });
+        return res.status(500).send({ message: err.message });
     }
 }; 
 
