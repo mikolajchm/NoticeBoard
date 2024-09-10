@@ -58,13 +58,22 @@ exports.user = async (req, res) => {
 };
 
 exports.logout = async (req, res) => {
-    try{ 
-        if (process.env.NODE_ENV !== "production") {
-            await Session.deleteMany({});
-        }
-        req.session.destroy();
-        res.json({ message: 'Logout successful' });
+    try {
+        req.session.destroy(async (err) => {
+            if (err) {
+                return res.status(500).send({ message: err.message });
+            }
+            if (process.env.NODE_ENV !== "production") {
+                try {
+                    await Session.deleteMany({});
+                } catch (dbError) {
+                    return res.status(500).send({ message: 'Error clearing sessions: ' + dbError.message });
+                }
+            }
+
+            res.json({ message: 'Logout successful' });
+        });
     } catch (err) {
-        res.status(500).send({ message: err.message }); 
+        res.status(500).send({ message: err.message });
     }
 };
