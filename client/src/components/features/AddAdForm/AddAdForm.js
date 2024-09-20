@@ -46,9 +46,11 @@ const AddAdForm = () => {
         setStatus('loading');
 
         fetch(`${API_URL}/api/ad/add`, options)
-            .then(res => {
+        .then((res) => res.json())
+            .then((data) => {
                 if (res.status === 201 ){
                     setStatus('success');
+                    dispatch(addAd(data));
                     setTimeout(() => {
                         navigate("/");
                     }, 50);
@@ -116,12 +118,12 @@ const AddAdForm = () => {
 
             <Form.Group className="mb-3" controlId="formPhone">
                 <Form.Label>Price :</Form.Label>
-                <Form.Control type="tel" value={price} onChange={e => setPrice(e.target.value)} placeholder="Price..." />
+                <Form.Control type="text" value={price} onChange={e => setPrice(e.target.value)} placeholder="Price..." />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formFile">
                 <Form.Label>Location:</Form.Label>
-                <Form.Control type="tel" value={location} onChange={e => setLocation(e.target.value)} placeholder="Location..." />
+                <Form.Control type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="Location..." />
                 </Form.Group>
 
             <Button variant="outline-primary" type="submit"> 
