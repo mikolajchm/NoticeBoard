@@ -34,7 +34,7 @@ exports.post = async (req, res) => {
     try {
         const newAd = new Ads(newad);
         await newAd.save();
-        res.json({ message: 'OK'});
+        res.status(201).json(newAd);
     } catch (err) {
         res.status(500).json({ message: err });
     }

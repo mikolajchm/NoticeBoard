@@ -23,7 +23,6 @@ const AddAdForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(getLoggedUser);
-    console.log(user);
     console.log("sellerid", user.id)
 
 
@@ -37,8 +36,7 @@ const AddAdForm = () => {
         fd.append('publishDate', publishDate);
         fd.append('price', price);  
         fd.append('location', location);
-        fd.append('sellerinfo', user._id);
-        console.log("sellerid", user._id)
+        fd.append('sellerinfo', user.id);
 
         const options = { 
             method: 'POST',
@@ -51,7 +49,6 @@ const AddAdForm = () => {
             .then(res => {
                 if (res.status === 201 ){
                     setStatus('success');
-                    dispatch(addAd(fd));
                     setTimeout(() => {
                         navigate("/");
                     }, 50);
@@ -110,7 +107,7 @@ const AddAdForm = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formFile">
-                <Form.Label>Phublish date :</Form.Label>
+                <Form.Label style={{ marginRight: '10px' }}>Phublish date :</Form.Label>
                 <DatePicker 
                     selected={publishDate} 
                     onChange={(date) => setPublishDate(date)} 

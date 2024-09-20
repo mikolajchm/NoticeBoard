@@ -32,27 +32,27 @@ const Login = () => {
         setStatus('loading');
 
         fetch(`${API_URL}/auth/login`, options)
-        .then((res) => res.json())
-        .then((data) => {
-            console.log('Response from server:', data); // Debugging
+            .then((res) => res.json())
+            .then((data) => {
+                console.log('Response from server:', data); // Debugging
 
-            if (data.message === 'Login successful') {
-                console.log('User data:', data.user); // Debugging
-                setStatus('success');
-                dispatch(logIn(data.user)); // Dispatch full user data
-                setTimeout(() => {
-                    navigate('/');
-                }, 500);
-            } else if (data.message === 'Login or password are incorrect') {
-                setStatus('clientError');
-            } else {
+                if (data.message === 'Login successful') {
+                    console.log('User data:', data.user); // Debugging
+                    setStatus('success');
+                    dispatch(logIn(data.user)); // Dispatch full user data
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 500);
+                } else if (data.message === 'Login or password are incorrect') {
+                    setStatus('clientError');
+                } else {
+                    setStatus('serverError');
+                }
+            })
+            .catch((err) => {
+                console.error('Error during fetch:', err); // Debugging
                 setStatus('serverError');
-            }
-        })
-        .catch((err) => {
-        console.error('Error during fetch:', err); // Debugging
-        setStatus('serverError');
-        }); 
+            }); 
     }
 
 

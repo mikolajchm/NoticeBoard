@@ -18,7 +18,7 @@ const adsReducer = (statePart = [], action) => {
         case ADD_AD:
             return [...statePart, {...action.payload }];
         case EDIT_AD:
-            return
+            return 
         case REMOVE_AD:
             return statePart.filter((ad) => ad.id !== action.payload);
     default: 
