@@ -46,25 +46,26 @@ const AddAdForm = () => {
         setStatus('loading');
 
         fetch(`${API_URL}/api/ad/add`, options)
-        .then((res) => res.json())
-            .then((data) => {
-                if (res.status === 201 ){
-                    setStatus('success');
-                    dispatch(addAd(data));
-                    setTimeout(() => {
-                        navigate("/");
-                    }, 50);
-                } else if (res.status === 400) {
-                    setStatus('clientError');
-                } else if (res.status === 409) {
-                    setStatus('loginError');
-                } else {
-                    setStatus('serverError');
-                }
-            })
-            .catch((err) => {
-                setStatus('serverError');
-            });
+    .then(async (res) => {
+        if (res.status === 201) {
+            const data = await res.json();
+            setStatus('success');
+            dispatch(addAd(data));
+            setTimeout(() => {
+                navigate("/");
+            }, 50);
+        } else if (res.status === 400) {
+            setStatus('clientError');
+        } else if (res.status === 409) {
+            setStatus('loginError');
+        } else {
+            setStatus('serverError');
+        }
+    })
+    .catch((err) => {
+        console.error(err);
+        setStatus('serverError');
+    });
     }
 
 
