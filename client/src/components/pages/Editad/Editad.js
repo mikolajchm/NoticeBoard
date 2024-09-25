@@ -1,8 +1,12 @@
+import EditAdForm from "../../features/EditAdForm/EditAdForm"
+
 const Editad = () => {
     return (
         <div>
-            <h1>EditAD</h1>
+            <EditAdForm/>
         </div>
     )
 }
+
+
 export default Editad;
