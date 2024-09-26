@@ -5,7 +5,7 @@ import Home from "./components/pages/Home/Home";
 import Ad from "./components/pages/Ad/Ad";
 import Addad from "./components/pages/Addad/Addad";
 import Editad from "./components/pages/Editad/Editad";
-import SearchPharse from "./components/pages/SearchPharse/SearchPharse";
+import AdSummary from "./components/pages/AdSummary/AdSummary";
 import Register from "./components/pages/Register/Register";
 import Login from "./components/pages/Login/Login";
 import User from "./components/pages/User/User";
@@ -26,7 +26,7 @@ function App() {
           <Route path="/ad/add" element={<Addad />} />
           <Route path="/ad/edit/:id" element={<Editad />} />
           <Route path="/ad/remove/:id" element={<AdRemove />} />
-          <Route path="/search/:searchParse" element={<SearchPharse />} />
+          <Route path="/search/:searchParse" element={<AdSummary />} />
           <Route path="/register" element={<Register/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/user" element={<User/>} />

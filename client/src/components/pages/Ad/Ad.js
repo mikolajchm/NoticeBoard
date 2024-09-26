@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/esm/Col';
 import Row from 'react-bootstrap/esm/Row';
+import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/esm/Image';
 
@@ -19,57 +20,29 @@ const Ad = () => {
 
     return (
         <Form>
-            <Form.Group className="mb-2">
+            <Form.Group className="mb-4">
                 <Card style={{ padding: '5px'}}>
-                    <Card.Header><cite>Information :</cite></Card.Header>
-                    <Card.Body >
+                    <Card.Header><cite>More information about: {adData.title}</cite></Card.Header>
+                    <Card.Body>
                         <blockquote className="blockquote mb-3">
-                            <Col xs={6} md={4} xl={8} className="mb-3">
+                            <Col xs={6} md={4} xl={6} className="mb-3">
                                 <Image src={IMGS_URL + adData.photo} fluid />
                             </Col>
-                            <p>
-                                Title : 
-                            </p> 
-                            <footer className="blockquote-footer" style={{color: 'black'}}>
-                                {adData.title}  
-                            </footer>
-                            <p>
-                                Description : 
-                            </p>
-                            <footer className="blockquote-footer" style={{color: 'black'}}>
-                                {adData.content}  
-                            </footer>
-                            <p>
-                                PublishDate : 
-                            </p>
-                            <footer className="blockquote-footer" style={{color: 'black'}}>
-                                {adData.publishDate}
-                            </footer>
-                            <p>
-                                Price : 
-                            </p>
-                            <footer className="blockquote-footer" style={{color: 'black'}}>
-                                {adData.price}
-                            </footer>
-                            <p>
-                                Location : 
-                            </p>
-                            <footer className="blockquote-footer" style={{color: 'black'}}>
-                                {adData.location}
-                            </footer>
-                            <p>
-                                Sellerinfo : 
-                            </p>
-                            <p className="blockquote-footer" style={{color: 'black'}}>
-                                Login : {adData.login}
-                            </p>
-                            <p  className="blockquote-footer" style={{color: 'black'}}>
-                                Avatar : {''}
-                                <Image src={IMGS_URL + adData.photo}  style={{width: '200px'}}/>
-                            </p>
-                            <p className="blockquote-footer" style={{color: 'black'}}>
-                                Phone : {adData.phone}
-                            </p>
+                            <ListGroup variant="header" className="mb-2">
+                                <ListGroup.Item>Title : {adData.title}</ListGroup.Item>
+                                <ListGroup.Item>Description : {adData.content} </ListGroup.Item>
+                                <ListGroup.Item>PublishDate : {adData.publishDate}</ListGroup.Item>
+                                <ListGroup.Item>Price :  {adData.price}</ListGroup.Item>
+                                <ListGroup.Item>Location :  {adData.location}</ListGroup.Item>
+                                <ListGroup.Item>Sellerinfo :  {adData.publishDate}</ListGroup.Item>
+                            </ListGroup>
+                            <Card.Header as="h3" className="mb-2">Sellerinfo</Card.Header>
+                            <ListGroup variant="header" className="mb-4">
+                                <ListGroup.Item>Login : {adData.login}</ListGroup.Item>
+                                <ListGroup.Item>Avatar : {''}
+                                <Image src={IMGS_URL + adData.photo}  style={{width: '200px'}}/></ListGroup.Item>
+                                <ListGroup.Item>Phone : {adData.phone}</ListGroup.Item>
+                            </ListGroup>
                             {loggedUser && (
                                 <div>
                                     <Link to={`/ad/edit/${id}`}>

@@ -1,4 +1,4 @@
-import Search from "../SearchPharse/SearchPharse";
+import Search from "../SearchPhrase/SearchPhrase";
 import Ads from "../../features/Ads/Ads";
 
 const Home = () => {
