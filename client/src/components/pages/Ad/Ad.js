@@ -1,28 +1,55 @@
+import { IMGS_URL } from '../../../config';
+import { useSelector } from 'react-redux';  
+import { API_URL } from '../../../config';
+import { getAdById, removeAd } from '../../../redux/adsRedux';
+import { getLoggedUser } from '../../../redux/userRedux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { IMGS_URL } from '../../../config';
-import { useSelector } from 'react-redux';
-import { getAdById } from '../../../redux/adsRedux';
-import { getLoggedUser } from '../../../redux/userRedux';
-import { useParams } from 'react-router-dom';
+import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/esm/Col';
-import Row from 'react-bootstrap/esm/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/esm/Image';
 
 
 const Ad = () => {
     const { id } = useParams();
+    const [show, setShow] = useState(false);
     const adData = useSelector((state) => getAdById(state, id));
     const loggedUser = useSelector(getLoggedUser);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const handleRemove = (e) => {
+        e.preventDefault(); 
+        
+        const options = {
+            method: 'DELETE',
+        };
+
+
+        fetch(`${API_URL}/api/ad/remove/${id}`, options).then((res) => {
+            if (res.status === 201) {
+                setShow(false);
+                dispatch(removeAd(id));
+                navigate("/");
+            } else {
+                console.log('Removed failed');
+            }
+        });
+    };
 
     return (
         <Form>
             <Form.Group className="mb-4">
                 <Card style={{ padding: '5px'}}>
-                    <Card.Header><cite>More information about: {adData.title}</cite></Card.Header>
+                <Card.Header as="h3" className="mb-2">More information about : {adData.title}</Card.Header>
                     <Card.Body>
                         <blockquote className="blockquote mb-3">
                             <Col xs={6} md={4} xl={6} className="mb-3">
@@ -36,23 +63,40 @@ const Ad = () => {
                                 <ListGroup.Item>Location :  {adData.location}</ListGroup.Item>
                                 <ListGroup.Item>Sellerinfo :  {adData.publishDate}</ListGroup.Item>
                             </ListGroup>
-                            <Card.Header as="h3" className="mb-2">Sellerinfo</Card.Header>
+                            <Card.Header as="h4" className="mb-2">Sellerinfo</Card.Header>
                             <ListGroup variant="header" className="mb-4">
                                 <ListGroup.Item>Login : {adData.login}</ListGroup.Item>
                                 <ListGroup.Item>Avatar : {''}
-                                <Image src={IMGS_URL + adData.photo}  style={{width: '200px'}}/></ListGroup.Item>
+                                <Image src={IMGS_URL + adData.avatar}  style={{width: '200px'}}/></ListGroup.Item>
                                 <ListGroup.Item>Phone : {adData.phone}</ListGroup.Item>
                             </ListGroup>
                             {loggedUser && (
-                                <div>
+                                <div 
+                                    className="modal show"
+                                    style={{ display: 'block', position: 'initial' }}
+                                >
                                     <Link to={`/ad/edit/${id}`}>
-                                        <Button  variant="outline-success" type="submitedit"> 
+                                        <Button  variant="outline-success" type="button"> 
                                             Edit
                                         </Button> 
                                     </Link>
-                                    <Button  className="ms-3" variant="danger" type="submitremove"> 
+                                    <Button  className="ms-3" variant="danger" onClick={handleShow}> 
                                         Remove 
                                     </Button>
+                                    <Modal show={show} onHide={handleClose}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Are you sure?</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>This operation is irreversible. Do you want to proceed?</Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={handleClose}>
+                                                Close
+                                            </Button>
+                                            <Button variant="danger" onClick={handleRemove}> 
+                                                Remove
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
                                 </div>
                             )}
                         </blockquote>

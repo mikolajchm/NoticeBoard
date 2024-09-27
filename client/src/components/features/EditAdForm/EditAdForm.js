@@ -28,7 +28,7 @@ const EditAdForm = () => {
     const [price, setPrice] = useState(adData.price || "");
     const [publishDate, setPublishDate] = useState(new Date());
     const [location, setLocation] = useState(adData.location || "");
-    const [photo, setPhoto] = useState(adData.image || null);
+    const [photo, setPhoto] = useState(adData.photo || null);
     const [status, setStatus] = useState(null); // null, 'loading', 'succes', 'serverError' , 'clientError', 'loginError'
 
 

@@ -34,12 +34,13 @@ const Login = () => {
         fetch(`${API_URL}/auth/login`, options)
             .then((res) => res.json())
             .then((data) => {
-                console.log('Response from server:', data); // Debugging
+                console.log('Response from server:', data); 
 
                 if (data.message === 'Login successful') {
-                    console.log('User data:', data.user); // Debugging
+                    console.log('User data:', data.user); 
                     setStatus('success');
-                    dispatch(logIn(data.user)); // Dispatch full user data
+                    dispatch(logIn(data.user)); 
+                    localStorage.setItem('user', JSON.stringify(data.user));
                     setTimeout(() => {
                         navigate('/');
                     }, 500);
@@ -50,7 +51,7 @@ const Login = () => {
                 }
             })
             .catch((err) => {
-                console.error('Error during fetch:', err); // Debugging
+                console.error('Error during fetch:', err);
                 setStatus('serverError');
             }); 
     }

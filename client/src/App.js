@@ -10,12 +10,26 @@ import Register from "./components/pages/Register/Register";
 import Login from "./components/pages/Login/Login";
 import User from "./components/pages/User/User";
 import Logout from "./components/pages/Logout/Logout";
+import createAds from "./redux/adsRedux";
 import NotFound from "./components/pages/NotFound/NotFound";
 import Footer from "./components/views/Footer/Footer";
-import AdRemove from "./components/pages/AdRemove/AdRemove";
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { logIn } from './redux/userRedux';
 
 
 function App() {
+
+  const dispatch = useDispatch();
+
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        if (user) {
+            dispatch(logIn(JSON.parse(user))); 
+        }
+    }, [dispatch]);
+
+    
   return (
     <main>
        <Container>
@@ -25,7 +39,6 @@ function App() {
           <Route path="/ad/:id" element={<Ad />} />
           <Route path="/ad/add" element={<Addad />} />
           <Route path="/ad/edit/:id" element={<Editad />} />
-          <Route path="/ad/remove/:id" element={<AdRemove />} />
           <Route path="/search/:searchParse" element={<AdSummary />} />
           <Route path="/register" element={<Register/>} />
           <Route path="/login" element={<Login/>} />

@@ -23,7 +23,7 @@ const AddAdForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector(getLoggedUser);
-    console.log("sellerid", user.id)
+    //console.log("sellerid", user.id)
 
 
     const handleSubmit = e => {
@@ -46,7 +46,7 @@ const AddAdForm = () => {
         setStatus('loading');
 
         fetch(`${API_URL}/api/ad/add`, options)
-    .then(async (res) => {
+        .then(async (res) => {
         if (res.status === 201) {
             const data = await res.json();
             setStatus('success');
