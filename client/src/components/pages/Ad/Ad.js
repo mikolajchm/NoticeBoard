@@ -2,6 +2,7 @@ import { IMGS_URL } from '../../../config';
 import { useSelector } from 'react-redux';  
 import { API_URL } from '../../../config';
 import { getAdById, removeAd } from '../../../redux/adsRedux';
+import { useEffect } from 'react';
 import { getLoggedUser } from '../../../redux/userRedux';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -18,6 +19,7 @@ import Image from 'react-bootstrap/esm/Image';
 const Ad = () => {
     const { id } = useParams();
     const [show, setShow] = useState(false);
+    const [sellerInfo, setSellerInfo] = useState(''); 
     const adData = useSelector((state) => getAdById(state, id));
     const loggedUser = useSelector(getLoggedUser);
     const dispatch = useDispatch();
@@ -26,6 +28,17 @@ const Ad = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    useEffect(() => {
+        if (adData) {
+            fetch(`${API_URL}/auth/user/${adData.sellerinfo}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    setSellerInfo(data);
+                })
+                .catch((error) => console.error('Error fetching seller info:', error));
+        }
+    }, [adData]);
+
     const handleRemove = (e) => {
         e.preventDefault(); 
         
@@ -33,14 +46,13 @@ const Ad = () => {
             method: 'DELETE',
         };
 
-
         fetch(`${API_URL}/api/ad/remove/${id}`, options).then((res) => {
             if (res.status === 200) {
                 setShow(false);
                 dispatch(removeAd(id));
                 navigate("/");
             } else {
-                console.log('Removed failed');
+                console.log('Remove failed');
             }
         });
     };
@@ -48,6 +60,7 @@ const Ad = () => {
     if (!adData) {
         return <p>Ad not found or loading...</p>;
     }
+
 
     return (
         <Form>
@@ -69,12 +82,12 @@ const Ad = () => {
                             </ListGroup>
                             <Card.Header as="h4" className="mb-2">Sellerinfo</Card.Header>
                             <ListGroup variant="header" className="mb-4">
-                                <ListGroup.Item>Login : {adData.login}</ListGroup.Item>
+                                <ListGroup.Item>Login : {sellerInfo.login}</ListGroup.Item>
                                 <ListGroup.Item>Avatar : {''}
-                                <Image src={IMGS_URL + adData.avatar}  style={{width: '200px'}}/></ListGroup.Item>
-                                <ListGroup.Item>Phone : {adData.phone}</ListGroup.Item>
+                                <Image src={IMGS_URL + sellerInfo.avatar}  style={{width: '200px'}}/></ListGroup.Item>
+                                <ListGroup.Item>Phone : {sellerInfo.phone}</ListGroup.Item>
                             </ListGroup>
-                            {loggedUser && (
+                            {loggedUser && loggedUser.id === adData.sellerinfo && ( 
                                 <div 
                                     className="modal show"
                                     style={{ display: 'block', position: 'initial' }}
