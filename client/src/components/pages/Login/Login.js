@@ -40,7 +40,6 @@ const Login = () => {
                     console.log('User data:', data.user); 
                     setStatus('success');
                     dispatch(logIn(data.user)); 
-                    localStorage.setItem('user', JSON.stringify(data.user));
                     setTimeout(() => {
                         navigate('/');
                     }, 500);

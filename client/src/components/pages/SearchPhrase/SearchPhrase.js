@@ -9,7 +9,7 @@ const SearchPhrase = () => {
     const [searchPhrase, setSearchPhrase] = useState('');
     
     const handleSearch = () => {
-        window.location.href = `/ad/search/${searchPhrase}`;
+        window.location.href = `/search/${searchPhrase}`;
     };
 
     return (

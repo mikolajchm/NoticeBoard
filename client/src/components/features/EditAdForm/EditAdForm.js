@@ -48,6 +48,10 @@ const EditAdForm = () => {
         fd.append('location', location);
         fd.append('user', user.id);
 
+        for (const [key, value] of fd.entries()) {
+            console.log(key, value);
+        }
+
         const options = { 
             method: 'PUT',
             body: fd, 
@@ -57,7 +61,7 @@ const EditAdForm = () => {
 
         fetch(`${API_URL}/api/ad/edit/${id}`, options)
         .then(async (res) => {
-            if (res.status === 201) {
+            if (res.status === 200) {
                 const data = await res.json();
                 setStatus('success');
                 dispatch(editAd(data));

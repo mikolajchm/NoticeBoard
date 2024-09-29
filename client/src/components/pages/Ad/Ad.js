@@ -35,7 +35,7 @@ const Ad = () => {
 
 
         fetch(`${API_URL}/api/ad/remove/${id}`, options).then((res) => {
-            if (res.status === 201) {
+            if (res.status === 200) {
                 setShow(false);
                 dispatch(removeAd(id));
                 navigate("/");
@@ -44,6 +44,10 @@ const Ad = () => {
             }
         });
     };
+
+    if (!adData) {
+        return <p>Ad not found or loading...</p>;
+    }
 
     return (
         <Form>

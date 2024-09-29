@@ -89,7 +89,8 @@ exports.putId = async (req, res) => {
             }
 
             await ad.save();
-            res.json({ message: 'OK' });
+            const updatedAd = await Ads.findById(req.params.id);
+            res.json(updatedAd)
         } else {
             res.status(404).json({ message: 'Not found...' });
         }
