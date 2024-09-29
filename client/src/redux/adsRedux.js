@@ -7,11 +7,13 @@ const createActionName = (actionName) => `app/ad/${actionName}`;
 const ADD_AD = createActionName('ADD_AD');
 const EDIT_AD = createActionName('EDIT_AD');
 const REMOVE_AD = createActionName('REMOVE_AD');
+const CLEAR_ADS = createActionName('CLEAR_ADS');
 
 //action creators
 export const addAd = payload => ({ type: ADD_AD, payload});
 export const editAd = payload => ({ type: EDIT_AD, payload });
 export const removeAd = payload => ({ type: REMOVE_AD, payload});
+export const clearAds = () => ({ type: CLEAR_ADS });
 
 const adsReducer = (statePart = [], action) => {
     switch(action.type) {
@@ -21,6 +23,8 @@ const adsReducer = (statePart = [], action) => {
             return statePart.map((ad) => ad._id === action.payload._id ? { ...ad, ...action.payload } : ad );
         case REMOVE_AD:
             return statePart.filter((ad) => ad._id !== action.payload);
+        case CLEAR_ADS:
+            return []; 
     default: 
         return  statePart;
     };

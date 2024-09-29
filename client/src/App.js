@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import { addAd } from './redux/adsRedux';  
 import { API_URL } from './config';  
 import { logIn } from './redux/userRedux'; 
+import { clearAds } from "./redux/adsRedux";
 
 function App() {
   const dispatch = useDispatch();  
@@ -24,6 +25,7 @@ function App() {
   useEffect(() => {
     const fetchAds = async () => {
       try {
+        dispatch(clearAds());
         const response = await fetch(`${API_URL}/api/ad`);
         if (response.ok) {
           const ads = await response.json();
