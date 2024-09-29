@@ -15,6 +15,7 @@ const Logout = () => {
  
         fetch(`${API_URL}/logout`, options)
         .then(() => {
+            sessionStorage.removeItem('user');
             dispatch(logOut());
             setTimeout(() => {
                 navigate("/");

@@ -39,7 +39,8 @@ const Login = () => {
                 if (data.message === 'Login successful') {
                     console.log('User data:', data.user); 
                     setStatus('success');
-                    dispatch(logIn(data.user)); 
+                    sessionStorage.setItem('user', JSON.stringify(data.user));
+                    dispatch(logIn(data.user));
                     setTimeout(() => {
                         navigate('/');
                     }, 500);
