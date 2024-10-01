@@ -1,6 +1,5 @@
 import { IMGS_URL } from '../../../config';
 import { getAllAds } from '../../../redux/adsRedux'
-import Container from 'react-bootstrap/Container';
 import { useSelector } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

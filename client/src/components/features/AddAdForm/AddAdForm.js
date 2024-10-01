@@ -1,15 +1,15 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
-import  { API_URL } from '../../../config';
-import Alert from 'react-bootstrap/Alert';
-import Spinner from 'react-bootstrap/Spinner';
+import { useSelector, useDispatch } from 'react-redux';
 import { addAd } from '../../../redux/adsRedux';
 import { useNavigate } from 'react-router-dom';
+import { getLoggedUser } from '../../../redux/userRedux';
+import { useState } from 'react';
+import { API_URL } from '../../../config';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
+import Spinner from 'react-bootstrap/Spinner';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useSelector, useDispatch } from 'react-redux';
-import { getLoggedUser } from '../../../redux/userRedux';
 
 const AddAdForm = () => {
     const [title, setTitle] = useState('');
